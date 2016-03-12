@@ -15,7 +15,7 @@ return [
       |
      */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => 'log',
     /*
       |--------------------------------------------------------------------------
       | SMTP Host Address
@@ -48,7 +48,7 @@ return [
       | used globally for all e-mails that are sent by your application.
       |
      */
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'pranikajain773@gmail.com', 'name' => 'pranika'],
     /*
       |--------------------------------------------------------------------------
       | E-Mail Encryption Protocol
