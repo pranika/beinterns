@@ -17,6 +17,7 @@ use App\employee;
 use App\User;
 use App\employer_address;
 use App\employer_links;
+use App\post_internship;
 use Log;
 
 class EmployeeController extends Controller {
@@ -53,12 +54,12 @@ class EmployeeController extends Controller {
             $user = new User(Input::all());
             $user->password = Hash::make($req->password);
             $user->confirmation_code = $confirmation_code;
-            $user->user_type='employer';
+            $user->user_type = 'employer';
             $user->save();
 
-           Mail::send('pages.email', ['confirmation_code'=>$confirmation_code,'user'=>$user], function($message) {
-            $message->to(Input::get('email'), Input::get('first_name'))
-                ->subject('Verify your email address');
+            Mail::send('pages.email', ['confirmation_code' => $confirmation_code, 'user' => $user], function($message) {
+                $message->to(Input::get('email'), Input::get('first_name'))
+                        ->subject('Verify your email address');
             });
 
             $employee = new employee;
@@ -85,7 +86,7 @@ class EmployeeController extends Controller {
     }
 
     public function confirm($confirmation_code) {
-            if (!$confirmation_code) {
+        if (!$confirmation_code) {
             throw new InvalidConfirmationCodeException;
         }
 
@@ -102,24 +103,24 @@ class EmployeeController extends Controller {
 
         return response()->json($user);
     }
-    
+
     public function show(Request $request) {
-      // $user=$req->session()->get('user_id');
-     $employee = employee::where('employee_user','=', $request->user->id)->first();
+        // $user=$req->session()->get('user_id');
+        $employee = employee::where('employee_user', '=', $request->user->id)->first();
         return response()->json($employee);
     }
-    
+
     public function details(Request $req) {
         //return response()->json(session()->get('user'));
 
         $details = array(
-           'company_type'=>'required',
-            'founded'=>'required',
-            'industry'=>'required',
-            'description'=>'required',
+            'company_type' => 'required',
+            'founded' => 'required',
+            'industry' => 'required',
+            'description' => 'required',
             'address' => 'required',
             'city' => 'required',
-            'size'=>'required',
+            'size' => 'required',
             'country' => 'required',
             'website' => 'required|url'
         );
@@ -127,40 +128,39 @@ class EmployeeController extends Controller {
         $validator = Validator::make(Input::all(), $details);
 
         if ($validator->fails()) {
-            return response()->json(['message'=>'All fields are mandatory']);
+            return response()->json(['message' => 'All fields are mandatory']);
         } else {
 
-        $employee = employee::where('employee_user','=', $req->user->id)->first();
-        $employee->fill(Input::all());
+            $employee = employee::where('employee_user', '=', $req->user->id)->first();
+            $employee->fill(Input::all());
 
-        if ($req->file('profile_photo') && $req->file('profile_photo')->isValid()) {
-            $destinationPath = 'uploads/profile_images/';
-            $extension = Input::file('profile_photo')->getClientOriginalExtension();
-            $fileName = rand(11111, 99999) . '.' . $extension;
-            Input::file('profile_photo')->move($destinationPath, $fileName);
-            $employee->profile_photo = $destinationPath . $fileName;
-        }
+            if ($req->file('profile_photo') && $req->file('profile_photo')->isValid()) {
+                $destinationPath = 'uploads/profile_images/';
+                $extension = Input::file('profile_photo')->getClientOriginalExtension();
+                $fileName = rand(11111, 99999) . '.' . $extension;
+                Input::file('profile_photo')->move($destinationPath, $fileName);
+                $employee->profile_photo = $destinationPath . $fileName;
+            }
 
 
-        /** Save File Section End * */
-        if ($employee->save()) {
-            return response()->json($employee);
-        } else {
-            return response()->json([
-                        'message' => 'database not updated'
-                            ], 500);
-        }
-
+            /** Save File Section End * */
+            if ($employee->save()) {
+                return response()->json($employee);
+            } else {
+                return response()->json([
+                            'message' => 'database not updated'
+                                ], 500);
+            }
         }
     }
 
     function add_links(Request $req) {
-       
-     
+
+
         $details = array(
             'facebook' => 'required|url',
-           // 'twitter'=>'required|url',
-            //'linkedin'=>'required|url'
+                // 'twitter'=>'required|url',
+                //'linkedin'=>'required|url'
         );
 
         $validator = Validator::make(Input::all(), $details);
@@ -179,7 +179,7 @@ class EmployeeController extends Controller {
             $links->id = $link_instance[0]->id;
             $links->exists = TRUE;
         }
-      
+
 
 
         if ($links->save()) {
@@ -192,12 +192,11 @@ class EmployeeController extends Controller {
     public function getuser(Request $req) {
         return response()->json($req->user);
     }
-      function show_links(Request $req)
-        {
-            $links=  employer_links::where('employee_user','=',$req->user->id)->first();
-            return response()->json($links);
-            
-        }
+
+    function show_links(Request $req) {
+        $links = employer_links::where('employee_user', '=', $req->user->id)->first();
+        return response()->json($links);
+    }
 
     public function change_password(Request $request) {
         $user = $request->user;
@@ -212,4 +211,66 @@ class EmployeeController extends Controller {
         }
         return response()->json(['message' => 'Password not exist'], 500);
     }
+
+    public function post_internship(Request $req) {
+
+        $details = array(
+            'title' => 'required',
+            'skills' => 'required',
+            'Responsibility' => 'required',
+            'who_can_apply' => 'required',
+            'additional_info' => 'required',
+            'category' => 'required',
+            'location' => 'required',
+            'start_date' => 'required',
+            'duration' => 'required',
+            'stipend' => 'required',
+            'stip_type' => 'required',
+            'Amount1' => 'required',
+            'Amount2' => 'required',
+            'currency' => 'required',
+            'wage_type' => 'required',
+            'Remark' => 'required',
+            'application_deadline' => 'required',
+            'no_of_internships' => 'required',
+            'type_of_internship' => 'required',
+            'question1' => 'required',
+            'question2' => 'required',
+            'question3' => 'required',
+        );
+
+        $validator = Validator::make(Input::all(), $details);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory']);
+        }
+        $post_internship = new post_internship;
+        $post_internship->employee_user = $req->user->id;
+        $post_internship->fill(Input::all());
+
+
+        if ($post_internship->save()) {
+            return response()->json($post_internship);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+    }
+
+    public function show_internship(Request $req) {
+       $internship=  post_internship::where('employee_user','=',$req->user->id);
+       return response()->json([$internship]);
+    }
+    public function update_internship(Request $req)
+    {
+        
+         $internship=  post_internship::where('employee_user','=',$req->user->id);
+         $internship->fill(Input::all());
+         
+            if ($internship->save()) {
+            return response()->json($internship);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+    }
+
 }

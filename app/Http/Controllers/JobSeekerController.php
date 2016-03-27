@@ -16,7 +16,13 @@ use App\education;
 use App\skillset;
 use App\nontechnical_skills;
 use App\User;
-
+use App\intern_internship;
+use App\volunteer_activity;
+use App\accomplishment;
+use App\participation;
+use App\training;
+use App\intern_links;
+use App\preference;
 class JobSeekerController extends Controller {
 
     function index() {
@@ -102,7 +108,7 @@ class JobSeekerController extends Controller {
     
 
     public function getuser(Request $req) {
-        return response()->json($req->user);chrome://chrome-signin/?access_point=0&reason=0
+        return response()->json($req->user);
     }
 
     public function change_password_intern(Request $request) {
@@ -172,7 +178,7 @@ class JobSeekerController extends Controller {
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } else
             $education = new education;
-        $education->jobseeker_user = 2;
+        $education->jobseeker_user = $req->user->id;
         $education->fill(Input::all());
         if ($education->save()) {
             return response()->json($education);
@@ -195,7 +201,7 @@ class JobSeekerController extends Controller {
         $skillset = new skillset;
         $skillset->fill(Input::all());
 
-        $skillset->jobseeker_user = 2;
+        $skillset->jobseeker_user = $req->user->id;
 
         $skill_instance = skillset::where('jobseeker_user', '=', 2)->take(1)->get();
         if (count($skill_instance) != 0) {
@@ -258,7 +264,7 @@ class JobSeekerController extends Controller {
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $certification=new certification;
-        $certification->jobseeker_user=2;
+        $certification->jobseeker_user=$req->user->id;
         $certification->fill(Input::all());
         if ($certification->save()) {
             return response()->json($certification);
@@ -266,5 +272,217 @@ class JobSeekerController extends Controller {
 
         return response()->json(['message' => 'database not updated'], 500);
  }
+ public function languages(Request $req)
+ {
+      $rules = array(
+           'languages'=>'required',
+            'read'=>'required',
+          'write'=>'required',
+          'speak'=>'required'
+        );
+
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+        $languages=new languages;
+        $languages->jobseeker_user=$req->user->id;
+        $languages->fill(Input::all());
+        
+         if ($languages->save()) {
+            return response()->json($languages);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+ }
+ function intern_links(Request $req) {
+       
+     
+        $details = array(
+         
+            'linkedin'=>'url'
+        );
+
+        $validator = Validator::make(Input::all(), $details);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 401);
+        }
+        // Create a new link and prefil with user input
+        $links = new intern_links;
+        $links->fill(Input::all());
+
+        $links->jobseeker_user = $req->user->id;
+
+        $link_instance = intern_links::where('jobseeker_user', '=', $req->user->id)->first();
+        if (count($link_instance) != 0) {
+            $links->id = $link_instance[0]->id;
+            $links->exists = TRUE;
+        }
+      
+
+
+        if ($links->save()) {
+            return response()->json($links);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+    }
+
+     public function internships(Request $req)
+ {
+      $rules = array(
+          'title'=>'required',
+          'company_name'=>'required',
+          'description'=>'required',
+          'location'=>'required',
+          'start_date'=>'required',
+          'end_date'=>'required'
+           
+        );
+       $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+        $intern=new intern_internship;
+        $intern->jobseeker_user=$req->user->id;
+        $intern->fill(Input::all());
+        if ($intern->save()) {
+            return response()->json($intern);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+        
+ 
+}
+public function volunteer_activity(Request $req)
+ {
+      $rules = array(
+          
+          'description'=>'required',
+         
+          'start_date'=>'required',
+      
+           
+        );
+       $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+        $activity=new volunteer_activity;
+        $activity->jobseeker_user=$req->user->id;
+        $activity->fill(Input::all());
+        if ($activity->save()) {
+            return response()->json($activity);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+        
+ 
+}
+public function accomplishment(Request $req)
+ {
+      $rules = array(
+          
+          'description'=>'required',
+         
+          'start_date'=>'required',
+      
+           
+        );
+       $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+        $accomplishment=new accomplishment;
+        $accomplishment->jobseeker_user=$req->user->id;
+        $accomplishment->fill(Input::all());
+        if ($accomplishment->save()) {
+            return response()->json($accomplishment);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+        
+ 
+}
+public function participation(Request $req)
+ {
+      $rules = array(
+          
+          'description'=>'required',
+         
+          'start_date'=>'required',
+      
+           
+        );
+       $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+        $participation=new participation;
+        $participation->jobseeker_user=$req->user->id;
+        $participation->fill(Input::all());
+        if ($participation->save()) {
+            return response()->json($participation);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+        
+ 
+}
+ public function training(Request $req)
+ {
+      $rules = array(
+          'title'=>'required',
+          'organisation'=>'required',
+          'description'=>'required',
+       
+          'start_date'=>'required',
+          'end_date'=>'required'
+           
+        );
+       $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+        $training=new training;
+        $training->jobseeker_user=$req->user->id;
+        $training->fill(Input::all());
+        if ($training->save()) {
+            return response()->json($training);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+        
+ 
+}
+public function preference(Request $req)
+{
+      $rules = array(
+          'category'=>'required',
+          'internship_type'=>'required',
+          'location'=>'required',
+       
+          'stipend'=>'required'
+          
+           
+        );
+       $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'All fields are mandatory'], 500);
+        } 
+    
+        $preference=new preference;
+        $preference->jobseeker_user=$req->user->id;
+        $preference->fill(Input::all());
+        if ($preference->save()) {
+            return response()->json($preference);
+        }
+
+        return response()->json(['message' => 'database not updated'], 500);
+        
+    
+}
+
 
 }

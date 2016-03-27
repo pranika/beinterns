@@ -36,30 +36,16 @@ use AuthenticatesAndRegistersUsers,
      * @var string   
      */
     public function login(Request $req) {
-        $user_value=new User;
+        $user_value = new User;
         $result = User::where('email', $req->email)->get();
         if (count($result) > 0) {
             $user = $result[0];
             response()->json($user->confirmed);
-            if (Hash::check($req->password, $user->password)) {
-               
-                
-                if ($user->user_type === 'intern' && $user->confirmed==1) {
-                  
-                    $req->session()->put('user_id',$user->id);
-                    $student=jobseeker::where('jobseeker_user','=',$user->id)->first();
-                    return response()->json($student);
-                    
-                } else if ($user->user_type === 'employer' && $user->confirmed==1) {
-                    $req->session()->put('user_id',$user->id);
-                    $employee=employee::where('employee_user','=',$user->id)->first();
-                    if ($req->session()->has('user_id')) {
-                    //return response()->json([$user]);
-                   return response()->json($employee);
-                }
-                
-    //
-                }
+            if (Hash::check($req->password, $user->password) && $user->confirmed == 1) {
+                $req->session()->put('user_id', $user->id);
+                $value = User::where('id', '=', $user->id)->first();
+                return response()->json($value);
+
             }
         }
         return response()->json(['error' => 'Invalid Auth'], 401);

@@ -22,9 +22,6 @@ Route::group(['middleware' => ['web']], function () {
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::get('/home', 'HomeController@index');
-
-
-
     Route::get('index', 'PagesController@index');
     Route::get('about', 'PagesController@about');
     Route::get('homepage', 'PagesController@homepage');
@@ -73,11 +70,19 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('certifications','JobSeekerController@certifications'); 
        
     Route::post('languages','JobSeekerController@languages'); 
+    Route::post('intern_links','JobSeekerController@intern_links'); 
+    Route::post('internships','JobSeekerController@internships'); 
+    Route::post('volunteer_activity','JobSeekerController@volunteer_activity');
+    Route::post('accomplishment','JobSeekerController@accomplishment');
+     Route::post('participation','JobSeekerController@participation');
+   Route::post('training','JobSeekerController@training');  
     Route::get('hello', function () {
         return 'welcome to first route';
     });
     route::post('add_links', 'EmployeeController@add_links');
-
+    route::post('post_internship', 'EmployeeController@post_internship');
+    route::get('show_internship', 'EmployeeController@show_internship');
+    route::post('update_internship', 'EmployeeController@update_internship');
     Route::get('fruits/{name?}', function ($name) {
         return $name . 'is the selected fruit route';
     });
