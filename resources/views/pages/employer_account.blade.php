@@ -18,6 +18,7 @@
 
 @section('employer_account')
 <section>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
@@ -29,21 +30,21 @@
                     <div >
                     <label>First Name</label>
                        <input name="log" id="fn_signup_employer" class="form-control input" size="20"
-                               placeholder="Enter your First Name" type="text" required>
+                              placeholder="Enter your First Name" type="text" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div >
                     <label>Last Name</label>
                         <input name="Password" id="ln_signup_employer" class="form-control input" size="20"
-                               placeholder="Enter Your Last name" type="text" required>
+                               placeholder="Enter Your Last name" type="text"required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div >
                     <label>Official Email</label>
                         <input name="Password" id="email_signup_employer" class="form-control input" size="20"
-                               placeholder="Enter Your Email" type="email" required>
+                               placeholder="Enter Your Email" type="email"required>
                     </div>
                 </div>
 
@@ -54,7 +55,7 @@
             </div>
 
 			    <div class="form-group login-username">
-                    <div >
+                    <div>
                     <label>Current Password</label>
                        <input name="log" id="fn_signup_employer" class="form-control input" size="20"
                                placeholder="Enter your Current Password" type="text" required>

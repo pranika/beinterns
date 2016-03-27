@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
+use App\employee;
+use App\jobseeker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -26,20 +27,42 @@ class AuthController extends Controller {
       |
      */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+use AuthenticatesAndRegistersUsers,
+    ThrottlesLogins;
 
     /**
      * Where to redirect users after login / registration.
      *
      * @var string   
      */
-     
     public function login(Request $req) {
-        $result = User::where('email', $req->email) -> where('password', $req->password) -> get();
+        $user_value=new User;
+        $result = User::where('email', $req->email)->get();
         if (count($result) > 0) {
-            return response()->json($result[0]);
+            $user = $result[0];
+            response()->json($user->confirmed);
+            if (Hash::check($req->password, $user->password)) {
+               
+                
+                if ($user->user_type === 'intern' && $user->confirmed==1) {
+                  
+                    $req->session()->put('user_id',$user->id);
+                    $student=jobseeker::where('jobseeker_user','=',$user->id)->first();
+                    return response()->json($student);
+                    
+                } else if ($user->user_type === 'employer' && $user->confirmed==1) {
+                    $req->session()->put('user_id',$user->id);
+                    $employee=employee::where('employee_user','=',$user->id)->first();
+                    if ($req->session()->has('user_id')) {
+                    //return response()->json([$user]);
+                   return response()->json($employee);
+                }
+                
+    //
+                }
+            }
         }
-        return response()->json(['error'=>'Invalid Auth'], 401);
+        return response()->json(['error' => 'Invalid Auth'], 401);
     }
 
     protected $redirectTo = '/login';
@@ -66,12 +89,13 @@ class AuthController extends Controller {
       'password' => 'required|confirmed|min:6',
       ]);
       } */
-        
+
     protected function create(array $data) {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => bcrypt($data['password']),
         ]);
-    } 
+    }
+
 }

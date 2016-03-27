@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\User;
+use App\employee;
 
 class PagesController extends Controller
 {
     //
-    public function index()
+    public function index(Request $req)
     {
+        $req->session()->put('key', 'value');
     	return view('pages.index') ;
     }
 
@@ -64,9 +67,12 @@ class PagesController extends Controller
         return view('pages.employerinfo') ;
     }
 
-     public function employer_account()
+     public function employer_account(Request $req)
     {
-        return view('pages.employer_account') ;
+     
+       
+         return view('pages.employer_account');
+         
     }
      public function student_account()
     {

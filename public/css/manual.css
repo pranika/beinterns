@@ -1,0 +1,232 @@
+@media screen and (max-width:991px) and (min-width: 768px)
+{
+.tabs-naviagtion li
+{margin:0 10% -1px; }
+}
+
+@media screen and (max-width:991px)
+{
+  .tabs-vertical .tabs-content
+  {float: none;}
+  .tabs-vertical .tabs-navigation
+  {width: auto; float: left;}
+}
+
+#for_negotiable , #for_fixed
+{
+  display: none;
+}
+
+section.student_portfolio_tabs
+{
+  padding: 30px 0;
+}
+.mj_social_media_section
+{
+  float: left;
+  width: 100%;
+}
+
+.mj_social_media_section p
+{
+  float: left;
+  padding: 17px;
+}
+
+
+.mj_social_media_section ul
+{
+  float:  left;
+  width: auto;
+  padding: 0px;
+  margin: 0px;
+}
+
+.mj_social_media_section ul li
+{
+  float:  left;
+  list-style: none;
+  padding-right: 20px;
+  text-align: center;
+}
+
+.mj_social_media_section ul li a.btn
+{
+  border-radius: 30px;
+}
+
+.mj_bottompadder40{padding-bottom: 40px;}
+.mj_toppadder40{padding-top: 25px;}
+
+ .mj_pagetitle_inner
+ {
+  position: absolute;
+  bottom: 35%;
+  left: 0;
+  width: 100%;
+ }
+
+.mj_joblogo
+{float: left;
+width: 100%;
+}
+
+ .mj_pageheading h1
+{color:   white;
+font-size: 60px;
+padding-top: 10px;
+position:   relative;
+margin: 0;
+padding-bottom: 15px;
+text-transform: uppercase;}
+
+.mj_pageheading ul li
+{
+  float: left;
+  list-style: none;
+  padding-right: 25px;
+}
+.mj_pageheading ul li label
+{color: white;}
+
+.mj_pageheading ul li a
+{color: white;}
+.mj_pageheading
+{
+  float: left;
+  width:  100%;
+}
+
+.mj_pageheading ul
+{
+  float: left;
+  width:  100%;
+  padding: 0;
+  margin: 0;  
+}
+
+.mj_joblogo img
+{
+  width: 200px;
+  height: 200px;
+  min-height:   50px;
+  border-radius: 100%;
+  border: 0;
+}
+
+.jumbotron
+{ padding: 10px 20px 0px ;
+margin-bottom: 10px;
+}
+
+#homepage_search
+{
+  width: 50%;
+  margin-left: 25%;
+}
+
+#search_btn
+{
+  
+}
+
+#homepage_form .input-group .form-control
+{
+background: transparent;
+}
+
+.page_toggle
+{
+  margin-left: 5%;
+}
+
+
+.background-colored
+{
+  background-color: #131219 !important;
+}
+
+section.background-colored
+{
+  margin-bottom: 0px;
+}
+
+.btn_centered
+  {
+    text-align: center;
+  }
+
+  .list-footer-company li
+    {
+    	margin-left: -18px;
+    	list-style: none;
+    }
+
+    .modal-title-site {
+    color: #131219;
+    font-family: Oswald;
+    font-size: 38px;
+    font-weight: lighter;
+    padding: 13px 0;
+    text-transform: uppercase;
+}
+
+.glyphicon{
+	top: 2px;
+}
+
+.form-group label
+{
+    color: #131219;
+}
+
+#login .modal-content
+{
+    background-image: url(../images/parallax/login.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#register .modal-content
+{   background-image: url(../images/parallax/signup.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
+#login_student .modal-content
+{
+	background-image: url(../images/b.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+} 
+#login_student .form-control
+{
+	background: transparent;
+    color: #131219;
+}
+
+#login_employer .modal-content
+{
+	background-image: url(../images/bbb.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+} 
+#login_employer .form-control
+{
+	background: transparent;
+}
+
+.studentsignup_div button , .studentlogin_div button , .employersignup_div button , .employerlogin_div button
+{
+    background: transparent;
+}
+
+  .modal {overflow-y: scroll;}
+
+  html.modal-open { overflow-y: hidden!important; }
+
+  @media (max-width: 991px) and (min-width: 768px)
+  {
+    div.employersignup_div , div.employerlogin_div
+    { margin-left: -10% ; }
+  }
