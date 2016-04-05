@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Flash;
 use Illuminate\Support\Facades\InvalidConfirmationCodeException;
 use Illuminate\Support\Facades\Mail;
-use App\employee;
+use App\employer;
 use App\User;
 use App\employer_address;
 use App\employer_links;
@@ -62,8 +62,8 @@ class EmployeeController extends Controller {
                         ->subject('Verify your email address');
             });
 
-            $employee = new employee;
-            $employee->employee_user = $user->id;
+            $employee = new employer;
+            $employee->employer_user = $user->id;
             $employee->first_name = $req->first_name;
             $employee->last_name = $req->last_name;
             $employee->email = $req->email;
@@ -106,7 +106,7 @@ class EmployeeController extends Controller {
 
     public function show(Request $request) {
         // $user=$req->session()->get('user_id');
-        $employee = employee::where('employee_user', '=', $request->user->id)->first();
+        $employee = employer::where('employer_user', '=', $request->user->id)->first();
         return response()->json($employee);
     }
 
@@ -131,7 +131,7 @@ class EmployeeController extends Controller {
             return response()->json(['message' => 'All fields are mandatory']);
         } else {
 
-            $employee = employee::where('employee_user', '=', $req->user->id)->first();
+            $employee = employer::where('employer_user', '=', $req->user->id)->first();
             $employee->fill(Input::all());
 
             if ($req->file('profile_photo') && $req->file('profile_photo')->isValid()) {
@@ -174,7 +174,7 @@ class EmployeeController extends Controller {
 
         $links->employee_user = $req->user->id;
 
-        $link_instance = employer_links::where('employee_user', '=', $req->user->id)->first();
+        $link_instance = employer_links::where('employer_user', '=', $req->user->id)->first();
         if (count($link_instance) != 0) {
             $links->id = $link_instance[0]->id;
             $links->exists = TRUE;
@@ -194,7 +194,7 @@ class EmployeeController extends Controller {
     }
 
     function show_links(Request $req) {
-        $links = employer_links::where('employee_user', '=', $req->user->id)->first();
+        $links = employer_links::where('employer_user', '=', $req->user->id)->first();
         return response()->json($links);
     }
 
@@ -212,65 +212,5 @@ class EmployeeController extends Controller {
         return response()->json(['message' => 'Password not exist'], 500);
     }
 
-    public function post_internship(Request $req) {
-
-        $details = array(
-            'title' => 'required',
-            'skills' => 'required',
-            'Responsibility' => 'required',
-            'who_can_apply' => 'required',
-            'additional_info' => 'required',
-            'category' => 'required',
-            'location' => 'required',
-            'start_date' => 'required',
-            'duration' => 'required',
-            'stipend' => 'required',
-            'stip_type' => 'required',
-            'Amount1' => 'required',
-            'Amount2' => 'required',
-            'currency' => 'required',
-            'wage_type' => 'required',
-            'Remark' => 'required',
-            'application_deadline' => 'required',
-            'no_of_internships' => 'required',
-            'type_of_internship' => 'required',
-            'question1' => 'required',
-            'question2' => 'required',
-            'question3' => 'required',
-        );
-
-        $validator = Validator::make(Input::all(), $details);
-
-        if ($validator->fails()) {
-            return response()->json(['message' => 'All fields are mandatory']);
-        }
-        $post_internship = new post_internship;
-        $post_internship->employee_user = $req->user->id;
-        $post_internship->fill(Input::all());
-
-
-        if ($post_internship->save()) {
-            return response()->json($post_internship);
-        }
-
-        return response()->json(['message' => 'database not updated'], 500);
-    }
-
-    public function show_internship(Request $req) {
-       $internship=  post_internship::where('employee_user','=',$req->user->id);
-       return response()->json([$internship]);
-    }
-    public function update_internship(Request $req)
-    {
-        
-         $internship=  post_internship::where('employee_user','=',$req->user->id);
-         $internship->fill(Input::all());
-         
-            if ($internship->save()) {
-            return response()->json($internship);
-        }
-
-        return response()->json(['message' => 'database not updated'], 500);
-    }
-
+   
 }

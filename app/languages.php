@@ -8,7 +8,7 @@ class languages extends Model
 {
      protected $table='languages';
      protected $fillable = [
-        'jobseeker_user', 'languages','read',
+        'languages','read',
           'write','speak'
     ];
        public $timestamps = false;

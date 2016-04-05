@@ -8,7 +8,7 @@ class participation extends Model
 {
       protected $table='particpation';
      protected $fillable = [
-        'jobseeker_user',
+      
           'start_date','description'
     ];
        public $timestamps = false;

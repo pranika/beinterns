@@ -8,7 +8,7 @@ class certifications extends Model
 {
     protected $table='certification';
      protected $fillable = [
-        'jobseeker_user', 'certificate_name','institution',
+       'certificate_name','institution',
           'serial_no','start_date','lifetime_validity',
           'end_date','description'
     ];

@@ -14,8 +14,8 @@ class Employee extends Migration {
         Schema::create('emp_account', function (Blueprint $table) {
             $table->increments('id');
             $table->string('first_name');
-            $table->integer('employee_user')->unsigned()->default(0);
-            $table->foreign('employee_user')->references('id')->on('users');
+            $table->integer('employer_user')->unsigned()->default(0);
+            $table->foreign('employer_user')->references('id')->on('users');
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password', 60);
@@ -33,8 +33,8 @@ class Employee extends Migration {
    
         Schema::create('internship', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('employee_user')->unsigned()->default(0);
-            $table->foreign('employee_user')->references('id')->on('users');
+            $table->integer('employer_user')->unsigned()->default(0);
+            $table->foreign('employer_user')->references('id')->on('users');
             $table->string('title');
             $table->string('internship_description');
             $table->string('requirement');
@@ -51,8 +51,8 @@ class Employee extends Migration {
         
         Schema::create('emp_links', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('employee_user')->unsigned()->default(0);
-            $table->foreign('employee_user')->references('id')->on('users');
+            $table->integer('employer_user')->unsigned()->default(0);
+            $table->foreign('employer_user')->references('id')->on('users');
             $table->string('facebook');
             $table->string('twitter');
             $table->string('linkedin');

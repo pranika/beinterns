@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Flash;
 use Illuminate\Support\Facades\InvalidConfirmationCodeException;
 use Illuminate\Support\Facades\Mail;
-use App\jobseeker;
+use App\student;
 use App\education;
 use App\skillset;
 use App\nontechnical_skills;
@@ -65,8 +65,8 @@ class JobSeekerController extends Controller {
             });
            
 
-            $jobseeker = new jobseeker;
-            $jobseeker->jobseeker_user = $user->id;
+            $jobseeker = new student;
+            $jobseeker->student_user = $user->id;
             $jobseeker->first_name = $req->first_name;
             $jobseeker->last_name = $req->last_name;
 
@@ -146,7 +146,7 @@ class JobSeekerController extends Controller {
         
         //return response()->json($user);
 
-        $jobseeker = jobseeker::where('jobseeker_user', '=', $req->user->id)->first();
+        $jobseeker = jobseeker::where('student_user', '=', $req->user->id)->first();
         $jobseeker->fill(Input::all());
           if ($req->file('profile_photo') && $req->file('profile_photo')->isValid()) {
             $destinationPath = 'uploads/profile_images/';
@@ -178,7 +178,7 @@ class JobSeekerController extends Controller {
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } else
             $education = new education;
-        $education->jobseeker_user = $req->user->id;
+        $education->student_user = $req->user->id;
         $education->fill(Input::all());
         if ($education->save()) {
             return response()->json($education);
@@ -201,9 +201,9 @@ class JobSeekerController extends Controller {
         $skillset = new skillset;
         $skillset->fill(Input::all());
 
-        $skillset->jobseeker_user = $req->user->id;
+        $skillset->student_user = $req->user->id;
 
-        $skill_instance = skillset::where('jobseeker_user', '=', 2)->take(1)->get();
+        $skill_instance = skillset::where('student_user', '=', $req->user->id)->first();
         if (count($skill_instance) != 0) {
             $skillset->id = $skill_instance[0]->id;
             $skillset->exists = TRUE;
@@ -231,9 +231,9 @@ class JobSeekerController extends Controller {
         $skillset = new nontechnical_skills;
         $skillset->fill(Input::all());
 
-        $skillset->jobseeker_user = 2;
+        $skillset->student_user = $req->user->id;
 
-        $skill_instance = nontechnical_skills::where('jobseeker_user', '=', 2)->take(1)->get();
+        $skill_instance = nontechnical_skills::where('student_user', '=', $req->user->id)->first();
         if (count($skill_instance) != 0) {
             $skillset->id = $skill_instance[0]->id;
             $skillset->exists = TRUE;
@@ -264,7 +264,7 @@ class JobSeekerController extends Controller {
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $certification=new certification;
-        $certification->jobseeker_user=$req->user->id;
+        $certification->student_user=$req->user->id;
         $certification->fill(Input::all());
         if ($certification->save()) {
             return response()->json($certification);
@@ -286,7 +286,7 @@ class JobSeekerController extends Controller {
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $languages=new languages;
-        $languages->jobseeker_user=$req->user->id;
+        $languages->student_user=$req->user->id;
         $languages->fill(Input::all());
         
          if ($languages->save()) {
@@ -300,7 +300,11 @@ class JobSeekerController extends Controller {
      
         $details = array(
          
-            'linkedin'=>'url'
+            'linkedin'=>'url',
+            'behance'=>'url',
+            'blog'=>'url',
+            'website1'=>'url',
+            'website2'=>'url'
         );
 
         $validator = Validator::make(Input::all(), $details);
@@ -312,7 +316,7 @@ class JobSeekerController extends Controller {
         $links = new intern_links;
         $links->fill(Input::all());
 
-        $links->jobseeker_user = $req->user->id;
+        $links->student_user = $req->user->id;
 
         $link_instance = intern_links::where('jobseeker_user', '=', $req->user->id)->first();
         if (count($link_instance) != 0) {
@@ -345,7 +349,7 @@ class JobSeekerController extends Controller {
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $intern=new intern_internship;
-        $intern->jobseeker_user=$req->user->id;
+        $intern->student_user=$req->user->id;
         $intern->fill(Input::all());
         if ($intern->save()) {
             return response()->json($intern);
@@ -370,7 +374,7 @@ public function volunteer_activity(Request $req)
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $activity=new volunteer_activity;
-        $activity->jobseeker_user=$req->user->id;
+        $activity->student_user=$req->user->id;
         $activity->fill(Input::all());
         if ($activity->save()) {
             return response()->json($activity);
@@ -395,7 +399,7 @@ public function accomplishment(Request $req)
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $accomplishment=new accomplishment;
-        $accomplishment->jobseeker_user=$req->user->id;
+        $accomplishment->student_user=$req->user->id;
         $accomplishment->fill(Input::all());
         if ($accomplishment->save()) {
             return response()->json($accomplishment);
@@ -420,7 +424,7 @@ public function participation(Request $req)
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $participation=new participation;
-        $participation->jobseeker_user=$req->user->id;
+        $participation->student_user=$req->user->id;
         $participation->fill(Input::all());
         if ($participation->save()) {
             return response()->json($participation);
@@ -446,7 +450,7 @@ public function participation(Request $req)
             return response()->json(['message' => 'All fields are mandatory'], 500);
         } 
         $training=new training;
-        $training->jobseeker_user=$req->user->id;
+        $training->student_user=$req->user->id;
         $training->fill(Input::all());
         if ($training->save()) {
             return response()->json($training);
@@ -473,7 +477,7 @@ public function preference(Request $req)
         } 
     
         $preference=new preference;
-        $preference->jobseeker_user=$req->user->id;
+        $preference->student_user=$req->user->id;
         $preference->fill(Input::all());
         if ($preference->save()) {
             return response()->json($preference);

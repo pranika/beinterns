@@ -8,7 +8,7 @@ class intern_internship extends Model
 {
    protected $table='intern_internship';
      protected $fillable = [
-        'jobseeker_user', 'title','company_name',
+       'title','company_name',
           'start_date','end_date','description','location'
     ];
        public $timestamps = false;

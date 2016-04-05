@@ -13,8 +13,8 @@ class Jobseeker extends Migration {
     public function up() {
         Schema::create('account', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -32,8 +32,9 @@ class Jobseeker extends Migration {
             $table->timestamps();
         });
         Schema::create('education', function (Blueprint $table) {
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->increments('id');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('degree_type');
             $table->string('university_name');
             $table->string('degree_level');
@@ -49,8 +50,8 @@ class Jobseeker extends Migration {
 
         Schema::create('technical', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('skill_1');
             $table->string('skill_2');
             $table->string('skill_3');
@@ -61,8 +62,8 @@ class Jobseeker extends Migration {
 
         Schema::create('non_technical', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('skill_1');
             $table->string('skill_2');
             $table->string('skill_3');
@@ -74,60 +75,19 @@ class Jobseeker extends Migration {
         });
         Schema::create('others', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('skillset');
             $table->integer('proficiency_level');
             $table->string('category');
             $table->string('subcategory');
             $table->string('status');
         });
-        Schema::create('technical_pref', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
-            $table->string('category')->default('');
-            $table->string('subcategory')->default('');
-            $table->string('technology')->default('');
-            $table->integer('duration')->default(0);
-            $table->boolean('location');
-            $table->integer('stipend')->default(0);
-            $table->string('perferred_type')->default('');
-        });
-
-        Schema::create('non_tech_pref', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
-            $table->string('category')->default('');
-            $table->string('subcategory')->default('');
-            $table->string('technology')->default('');
-            $table->integer('duration')->default(0);
-            $table->boolean('location');
-            $table->integer('stipend')->default(0);
-            $table->string('perferred_type')->default('');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-        });
-        Schema::create('other_pref', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
-            $table->string('category')->default('');
-            $table->string('subcategory')->default('');
-            $table->string('technology')->default('');
-            $table->integer('duration')->default(0);
-            $table->boolean('location');
-            $table->integer('stipend')->default(0);
-            $table->string('perferred_type')->default('');
-            $table->dateTime('created_at');
-            $table->dateTime('updated_at');
-        });
-
+       
         Schema::create('certification', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
-            $table->foreign('email')->references('email')->on('account_info');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('certificate_name')->default('');
             $table->string('institution')->default('');
             $table->integer('serial_no')->default(0);
@@ -140,8 +100,8 @@ class Jobseeker extends Migration {
 
         Schema::create('intern_internship', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('title');
             $table->string('company_name');
             $table->string('description');
@@ -151,23 +111,23 @@ class Jobseeker extends Migration {
         });
         Schema::create('volunteer_activity', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('description');
             $table->date('start_date');
         });
         Schema::create('accomplishment', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('description');
             $table->date('start_date');
         });
 
         Schema::create('training', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('title');
             $table->string('organisation');
             $table->string('description');
@@ -177,16 +137,16 @@ class Jobseeker extends Migration {
 
         Schema::create('participation', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('description');
             $table->date('start_date');
         });
         Schema::create('links', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('linkedin');
             $table->string('behance');
             $table->string('blog');
@@ -195,13 +155,13 @@ class Jobseeker extends Migration {
             $table->string('status');
         });
         Schema::create('documents', function (Blueprint $table) {
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+             $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('document');
         });
         Schema::create('languages', function (Blueprint $table) {
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('languages');
             $table->string('read');
             $table->string('write');

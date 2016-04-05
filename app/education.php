@@ -12,4 +12,5 @@ class education extends Model
          'gpa_four','gpa_ten','completion_date'
     ];
          public $timestamps = false;
+     
 }

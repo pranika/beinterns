@@ -14,8 +14,8 @@ class Preference extends Migration
     {
           Schema::create('preferences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('jobseeker_user')->unsigned()->default(0);
-            $table->foreign('jobseeker_user')->references('id')->on('users');
+            $table->integer('student_user')->unsigned()->default(0);
+            $table->foreign('student_user')->references('id')->on('users');
             $table->string('category')->default('');
             $table->string('internship_type')->default('');
             $table->string('location');

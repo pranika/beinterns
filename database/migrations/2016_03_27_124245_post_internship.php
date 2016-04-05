@@ -14,8 +14,8 @@ class PostInternship extends Migration
     {
           Schema::create('post_internship', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('employee_user')->unsigned()->default(0);
-            $table->foreign('employee_user')->references('id')->on('users');
+            $table->integer('employer_user')->unsigned()->default(0);
+            $table->foreign('employer_user')->references('id')->on('users');
             $table->string('title');
             $table->string('skills');
             $table->string('Responsibility');

@@ -58,11 +58,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('formVerify', function () {
         return 'welcome! Recieved your form values! Post method used this time';
     });
-    Route::get('employee','EmployeeController@show');
-    Route::post('employee', 'EmployeeController@store');
+    Route::get('employer','EmployeeController@show');
+    Route::post('employer', 'EmployeeController@store');
     Route::post('details', 'EmployeeController@details');
    // Route::get('employee','EmployeeController@show');
-    Route::post('jobseeker', 'JobSeekerController@store');
+    Route::post('student', 'JobSeekerController@store');
     Route::post('student_info','JobSeekerController@student_info');
     Route::post('education','JobSeekerController@education');
     Route::post('technical_skill','JobSeekerController@technical_skill');  
@@ -80,9 +80,17 @@ Route::group(['middleware' => 'web'], function () {
         return 'welcome to first route';
     });
     route::post('add_links', 'EmployeeController@add_links');
-    route::post('post_internship', 'EmployeeController@post_internship');
-    route::get('show_internship', 'EmployeeController@show_internship');
-    route::post('update_internship', 'EmployeeController@update_internship');
+    route::post('post_internship', 'InternshipApplicationController@post_internship');
+    route::get('show_internship', 'InternshipApplicationController@show_internship');
+    route::post('update_internship', 'InternshipApplicationController@update_internship');
+    route::post('add_intern', 'InternshipApplicationController@add_intern');
+    route::get('getinternship', 'InternshipApplicationController@getinternship');
+    route::get('getinterns', 'InternshipApplicationController@getinterns');
+    route::get('getinterns', 'InternshipApplicationController@getinterns');
+    route::get('sortby_date', 'InternshipApplicationController@sortby_date');
+    route::get('sortby_location', 'InternshipApplicationController@sortby_location');
+    route::get('sortby_type', 'InternshipApplicationController@sortby_type');
+    route::get('sortby_category', 'InternshipApplicationController@sortby_category');
     Route::get('fruits/{name?}', function ($name) {
         return $name . 'is the selected fruit route';
     });
